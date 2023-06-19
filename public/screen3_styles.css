@@ -1,0 +1,243 @@
+@font-face {
+    font-family: 'ImcreSoojin';
+    src: url('fonts/ImcreSoojin.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+h1 {
+    font-family: 'ImcreSoojin';
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+h2 {
+    font-family: 'ImcreSoojin';
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#total-usage {
+    font-size: 24px;
+    text-align: center;
+}
+
+#daily-usage-chart,
+#weekly-usage-chart {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#monthly-usage {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#calendar {
+    margin-top: 20px;
+}
+
+/*------------------------*/
+.graph-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.graph-container canvas {
+    /* 그래프 스타일 */
+    width: 200px;
+    height: 100px;
+}
+
+canvas {
+    max-width: 200px;
+}
+
+.usage-label {
+    /* 사용량 텍스트 스타일 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'ImcreSoojin';
+    color: #424779;
+}
+
+/*------------------------------------*/
+
+.home-button-container {
+    text-align: center;
+    margin-top: 10px;
+
+}
+
+.home-button {
+
+    border: none;
+    outline: none;
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+}
+
+.button-image {
+    width: 80px;
+    height: 80px;
+}
+
+.home-button:active {
+    opacity: 0.8;
+}
+
+
+/* 생략 */
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.button-container button {
+    display: flex;
+    align-items: center;
+    font-family: 'ImcreSoojin';
+    font-size: 24px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background-color: #777ED8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 15%
+}
+
+
+/*------------------------------------------*/
+
+.modal-container {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-family: 'ImcreSoojin';
+}
+
+.modal-content {
+    font-family: 'ImcreSoojin';
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #ffffff;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#calendar {
+    margin-top: 20px;
+}
+
+/*.........................................*/
+
+/* 모달 컨테이너 스타일 */
+#modal-container {
+    display: none;
+    /* 초기에 숨겨진 상태로 설정 */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* 배경색과 투명도 설정 */
+}
+
+/* 모달 내용 스타일 */
+#modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+}
+
+/* 달력 스타일 */
+#calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#calendar th,
+#calendar td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+#calendar th {
+    background-color: #FFC717;
+}
+
+#calendar td {
+    cursor: pointer;
+}
+
+#calendar td:hover {
+    background-color: #f9f9f9;
+}
+
+/*-----------------------------------------*/
+
+canvas {
+    border: 1px solid #ccc;
+    margin: 20px;
+}
+
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.bar {
+    width: 20px;
+    background-color: #5D63AA;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.bar-label {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 5px;
+}

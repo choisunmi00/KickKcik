@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" type="text/css" href="screen2_styles.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="image-container">
+      <img src="home.png" alt="home_img" class="home_img">
+    </div>
+    <div class="content">
+      <div class="time-label">오늘 킥보드를 탄 시간은?!</div>
+      <div class="graph-container">
+        <canvas id="graph" width="300" height="300"></canvas>
+      </div>
+      <div class="button-container">
+        <button id="timer-button" onclick="toggleTimer()"><span id="timer-label">Timer</span></button>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="home-button-container">
+    <div id="container">
+      <div id="buttons">
+        <button class="home-button" onclick="navigateToScreen('screen1')"><img src="button1.png" alt="button1"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen2')"><img src="button2.png" alt="button2"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen3')"><img src="button3.png" alt="button3"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen4')"><img src="button4.png" alt="button4"
+            class="button-image"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script>
+    // Firebase 설정 정보
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      databaseURL: "YOUR_DATABASE_URL",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID",
+      measurementId: "YOUR_MEASUREMENT_ID"
+    };
+
+    // Firebase 초기화
+    firebase.initializeApp(firebaseConfig);
+
+    // 타이머 시작 및 데이터 저장 함수
+    let isTimerRunning = false;
+    let timerInterval;
+    let elapsedTime = 0;
+
+    function startTimer() {
+      isTimerRunning = true;
+      timerInterval = setInterval(updateTimer, 1000);
+
+      function updateTimer() {
+        elapsedTime++;
+        updateClock();
+      }
+    }
+
+    function stopTimer() {
+      isTimerRunning = false;
+      clearInterval(timerInterval);
+
+      // 데이터베이스 참조 생성
+      const database = firebase.database();
+
+      // 킥보드 사용 시간과 날짜를 저장할 데이터 객체
+      const kickboardData = {
+        time: elapsedTime,
+        date: new Date().toISOString().split('T')[0] // 오늘 날짜
+      };
+
+      // 데이터베이스에 데이터 추가
+      database.ref(`kickboard-usage/${kickboardData.date}`).push(kickboardData)
+        .then(() => {
+          console.log("킥보드 사용 데이터가 성공적으로 저장되었습니다.");
+        })
+        .catch(error => {
+          console.error("킥보드 사용 데이터 저장 중 오류가 발생했습니다:", error);
+        });
+    }
+    // 타이머 시작 또는 정지 함수 호출
+    function toggleTimer() {
+      if (isTimerRunning) {
+        stopTimer();
+      } else {
+        startTimer();
+      }
+
+    }
+
+
+
+    // 시계 그래프 업데이트 함수
+    function updateClock() {
+      const canvas = document.getElementById('graph');
+      const context = canvas.getContext('2d');
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = (canvas.width - 10) / 2;
+      const startAngle = -Math.PI / 2;
+      const endAngle = startAngle + (elapsedTime / 360) * (2 * Math.PI);
+
+      // 배경 원 그리기
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.beginPath();
+      context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      context.lineWidth = 10;
+      context.strokeStyle = '#D5D8FF';
+      context.stroke();
+
+      // 채워지는 원 그리기
+      context.beginPath();
+      context.arc(centerX, centerY, radius, startAngle, endAngle);
+      context.lineWidth = 10;
+      context.strokeStyle = '#FFC717';
+      context.stroke();
+
+      // 시간 텍스트 그리기
+      context.font = 'bold 60px Arial';
+      context.fillStyle = '#12103A';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+      const seconds = (elapsedTime % 60).toString().padStart(2, '0');
+      const timeText = `${minutes}:${seconds}`;
+      context.fillText(timeText, centerX, centerY);
+
+      // 사용량 텍스트 업데이트
+      const usageLabel = document.querySelector('.usage-label');
+      usageLabel.textContent = timeText;
+    }
+
+
+    function navigateToScreen(screenName) {
+      // 화면 전환 로직을 구현하세요
+      switch (screenName) {
+        case 'screen1':
+          window.location.href = '/screen1'; // screen1.html로 이동
+          break;
+        case 'screen2':
+          window.location.href = '/screen2'; // screen2.html로 이동
+          break;
+        case 'screen3':
+          window.location.href = '/screen3'; // screen3.html로 이동
+          break;
+        case 'screen4':
+          window.location.href = '/screen4'; // screen4.html로 이동
+          break;
+        default:
+          console.error('유효하지 않은 화면 이름입니다.');
+          break;
+      }
+    }
+  </script>
+</body>
+
+</html>

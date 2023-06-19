@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alram Setting</title>
+  <link rel="stylesheet" type="text/css" href="screen1_styles.css">
+</head>
+
+<body>
+  <h2>알람 설정</h2>
+  <form>
+    <div>
+      <label for="alarm-toggle">알람 활성</label>
+      <div class="toggle-btn">
+        <button id="toggle-btn">ON</button>
+      </div>
+    </div>
+    <div>
+      <label for="alarm-range">알람 설정 범위</label>
+      <select id="alarm-range">
+        <option value="day">하루</option>
+        <option value="week">일주일</option>
+        <option value="month">한 달</option>
+      </select>
+    </div>
+    <div>
+      <label for="alarm-limit">알람 한계 시간(금액)</label>
+      <input type="text" id="alarm-limit">
+    </div>
+    <div>
+      <label for="alarm-method">알람 방식</label>
+      <select id="alarm-method">
+        <option value="sound">소리</option>
+        <option value="vibration">진동</option>
+        <option value="sound-vibration">소리 & 진동</option>
+      </select>
+    </div>
+    <div>
+      <label for="alarm-repeat">알람 반복</label>
+      <div class="repeat-btn">
+        <button id="repeat-btn">ON</button>
+      </div>
+    </div>
+
+    <div>
+      <label for="alarm-sound">알람 소리 종류</label>
+      <select id="alarm-sound">
+        <option value="laugh">---선택---</option>
+        <!-- 다른 소리 옵션들 추가 -->
+      </select>
+    </div>
+  </form>
+
+  <div class="home-button-container">
+    <div id="container">
+      <div id="buttons">
+        <button class="home-button" onclick="navigateToScreen('screen1')"><img src="button1.png" alt="button1"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen2')"><img src="button2.png" alt="button2"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen3')"><img src="button3.png" alt="button3"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen4')"><img src="button4.png" alt="button4"
+            class="button-image"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="screen1_script.js"></script>
+</body>
+
+</html>

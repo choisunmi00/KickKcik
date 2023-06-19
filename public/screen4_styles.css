@@ -1,0 +1,106 @@
+/* styles.css */
+@font-face {
+  font-family: 'ImcreSoojin';
+  src: url('fonts/ImcreSoojin.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 전체 페이지 스타일 */
+body {
+  font-family: "Arial", sans-serif;
+  /* 폰트 변경 */
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'ImcreSoojin'
+}
+
+/* 출발지, 도착지 입력란과 버튼 스타일 */
+div {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+label {
+  font-family: 'ImcreSoojin';
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+input[type="text"] {
+  padding: 5px;
+  width: 80px;
+  /* 입력 칸의 길이 줄임 */
+  margin-right: 10px;
+  background-color: #FFC717;
+  border: none;
+}
+
+button {
+  font-family: 'ImcreSoojin';
+  padding: 5px 10px;
+  background-color: #5D63AA;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 15%
+}
+
+/* 예상 소요 시간 표시 스타일 */
+p {
+  font-family: 'ImcreSoojin';
+  font-weight: bold;
+  margin-top: 20px;
+  /* 이미지와 간격 띄우기 */
+  margin-right: 10px;
+}
+
+span {
+  font-family: 'ImcreSoojin';
+  color: #777ED8;
+  font-weight: normal;
+}
+
+.walk_img {
+  width: 200px;
+  height: 200px;
+  margin-top: 5px;
+  /* 이미지와 간격 띄우기 */
+  margin-bottom: 20px;
+  border-radius: 50%
+}
+
+/*------------------------------------------------*/
+
+.home-button-container {
+  text-align: center;
+  margin-top: 0px;
+  padding: 0px;
+}
+
+.home-button {
+  border: none;
+  outline: none;
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+}
+
+.button-image {
+  width: 80px;
+  height: 80px;
+}
+
+.home-button:active {
+  opacity: 0.8;
+}

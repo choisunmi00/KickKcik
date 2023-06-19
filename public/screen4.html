@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Walk</title>
+  <link rel="stylesheet" type="text/css" href="screen4_styles.css">
+</head>
+
+<body>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <h1>걸어본다면?!</h1>
+  <img src="walk.png" alt="walk_img" class="walk_img">
+  <div>
+    <label for="originLatitude">출발지 위도</label>
+    <input type="text" id="originLatitude">
+    <label for="originLongitude">경도</label>
+    <input type="text" id="originLongitude">
+    <button id="setOriginButton">설정</button>
+  </div>
+
+  <div>
+    <label for="destinationLatitude">도착지 위도</label>
+    <input type="text" id="destinationLatitude">
+    <label for="destinationLongitude">경도</label>
+    <input type="text" id="destinationLongitude">
+    <button id="setDestinationButton">설정</button>
+  </div>
+
+
+  <div id="myLocationInfo">
+    <label for="current">현위치 | </label>
+    <p>위도 <span id="latitude"></span></p>
+    <p>경도 <span id="longitude"></span></p>
+  </div>
+  <div id="map"></div>
+  <div>
+    <label for="time">예상 소요 시간 | </label>
+    <p>걷기(분) <span id="walkingTime"></span></p>
+    <p>킥보드(분) <span id="kickScooterTime"></span></p>
+  </div>
+
+  <div id="container">
+    <div id="buttons">
+      <button class="home-button" onclick="navigateToScreen('screen1')"><img src="button1.png" alt="button1"
+          class="button-image"></button>
+      <button class="home-button" onclick="navigateToScreen('screen2')"><img src="button2.png" alt="button2"
+          class="button-image"></button>
+      <button class="home-button" onclick="navigateToScreen('screen3')"><img src="button3.png" alt="button3"
+          class="button-image"></button>
+      <button class="home-button" onclick="navigateToScreen('screen4')"><img src="button4.png" alt="button4"
+          class="button-image"></button>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    function loadMap() {
+      const latitudeElement = document.getElementById("latitude");
+      const longitudeElement = document.getElementById("longitude");
+
+      if (latitudeElement && longitudeElement) {
+        const latitude = parseFloat(latitudeElement.textContent);
+        const longitude = parseFloat(longitudeElement.textContent);
+
+        // 유효성 검사: NaN 값 확인
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+          const mapOptions = {
+            center: { lat: latitude, lng: longitude },
+            zoom: 14,
+          };
+
+          const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        } else {
+          console.error("유효하지 않은 좌표값입니다.");
+        }
+      } else {
+        console.error("latitude 또는 longitude 요소를 찾을 수 없습니다.");
+      }
+    }
+
+    function calculateTime(origin, destination) {
+      // Google Directions API를 사용하여 걷기 및 킥보드 예상 시간 계산
+      const directionsService = new google.maps.DirectionsService();
+
+      // 걷기 예상 시간 요청
+      const walkingRequest = {
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.WALKING
+      };
+
+      directionsService.route(walkingRequest, function (result, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          const walkingTime = result.routes[0].legs[0].duration.text;
+          document.getElementById("walkingTime").textContent = walkingTime;
+        } else {
+          console.error("걷기 예상 시간을 가져오지 못했습니다.");
+        }
+      });
+
+      // 킥보드 예상 시간 요청
+      const kickScooterRequest = {
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.BICYCLING
+      };
+
+      directionsService.route(kickScooterRequest, function (result, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          const kickScooterTime = result.routes[0].legs[0].duration.text;
+          document.getElementById("kickScooterTime").textContent = kickScooterTime;
+        } else {
+          console.error("킥보드 예상 시간을 가져오지 못했습니다.");
+        }
+      });
+    }
+
+    function initMap() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          document.getElementById("latitude").textContent = latitude;
+          document.getElementById("longitude").textContent = longitude;
+
+          // loadMap() 함수 호출
+          loadMap();
+        });
+      } else {
+        alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
+      }
+    }
+
+    document.getElementById("setOriginButton").addEventListener("click", function () {
+      const originLatitude = document.getElementById("originLatitude").value;
+      const originLongitude = document.getElementById("originLongitude").value;
+      const destinationLatitude = document.getElementById("destinationLatitude").value;
+      const destinationLongitude = document.getElementById("destinationLongitude").value;
+
+      if (originLatitude && originLongitude && destinationLatitude && destinationLongitude) {
+        const origin = new google.maps.LatLng(parseFloat(originLatitude), parseFloat(originLongitude));
+        const destination = new google.maps.LatLng(parseFloat(destinationLatitude), parseFloat(destinationLongitude));
+
+        // 예상 시간 계산
+        calculateTime(origin, destination);
+      } else {
+        console.error("출발지와 도착지의 위도와 경도를 입력해주세요.");
+      }
+    });
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDANTMMhPxgnT-XZ6R31aNT9isljsanjgI&callback=initMap"
+    async defer></script>
+</body>
+
+</html>

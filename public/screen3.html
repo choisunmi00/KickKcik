@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>킥보드 이용 내역</title>
+  <link rel="stylesheet" type="text/css" href="screen3_styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    #graph {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      background-color: #FFC717;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .usage-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      font-family: 'ImcreSoojin';
+      color: #424779;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="usage-info">
+    <h1>킥보드를 얼마나 사용했을까?</h1>
+  </div>
+  <div id="daily-usage-chart">
+    <h2>하루 동안</h2>
+    <div class="graph-container">
+      <canvas id="graph" width="200" height="200"></canvas>
+    </div>
+  </div>
+  <div id="weekly-usage-chart">
+    <h2>일주일 동안</h2>
+    <div class="bar-chart">
+      <div class="bar" style="height: 80px;"></div>
+      <div class="bar" style="height: 20px;"></div>
+      <div class="bar" style="height: 70px;"></div>
+      <div class="bar" style="height: 50px;"></div>
+      <div class="bar" style="height: 30px;"></div>
+      <div class="bar" style="height: 10px;"></div>
+      <div class="bar" style="height: 10px;"></div>
+    </div>
+    <div id="weekday-labels"></div>
+    <div id="monthly-usage">
+      <h2>한달 동안</h2>
+      <div class="button-container">
+        <button onclick="showCalendar()">달력</button>
+      </div>
+    </div>
+
+    <!-- 모달 창 -->
+    <div class="modal-container" id="modal-container">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div id="calendar"></div>
+      </div>
+    </div>
+
+
+    <div id="container">
+      <div id="buttons">
+        <button class="home-button" onclick="navigateToScreen('screen1')"><img src="button1.png" alt="button1"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen2')"><img src="button2.png" alt="button2"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen3')"><img src="button3.png" alt="button3"
+            class="button-image"></button>
+        <button class="home-button" onclick="navigateToScreen('screen4')"><img src="button4.png" alt="button4"
+            class="button-image"></button>
+      </div>
+    </div>
+
+    <script src="screen3_script.js"></script>
+</body>
+
+</html>
